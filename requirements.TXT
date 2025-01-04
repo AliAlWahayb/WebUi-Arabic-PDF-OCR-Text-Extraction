@@ -1,0 +1,6 @@
+google-cloud-documentai
+PyPDF2
+python-dotenv
+arabic_reshaper
+python-bidi
+tqdm
