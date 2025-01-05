@@ -1,7 +1,7 @@
 import os
 import PyPDF2
 
-from Display_Arabic_In_Termanal import display_arabic
+from APOTE.Display_Arabic_In_Termanal import display_arabic
 
 def split_pdf(pdf_path, output_folder="output_pages"):
     """يقسم ملف PDF ويسمي الملفات بالصيغة bookNamePageNumber.pdf بدون إضافة نص."""

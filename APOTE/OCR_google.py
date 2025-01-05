@@ -6,7 +6,7 @@ from google.api_core.client_options import ClientOptions
 from google.cloud import documentai  # type: ignore
 import os
 
-from Display_Arabic_In_Termanal import display_arabic
+from APOTE.Display_Arabic_In_Termanal import display_arabic
 
 def process_document_sync(
     project_id: str,

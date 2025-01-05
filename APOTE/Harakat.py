@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import multiprocessing
-from Display_Arabic_In_Termanal import display_arabic
+from APOTE.Display_Arabic_In_Termanal import display_arabic
 from farasa.diacratizer import FarasaDiacritizer
 import time
 
