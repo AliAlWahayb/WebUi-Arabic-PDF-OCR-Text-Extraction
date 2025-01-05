@@ -1,7 +1,7 @@
 import os
 import re
 
-from Display_Arabic_In_Termanal import display_arabic
+from APOTE.Display_Arabic_In_Termanal import display_arabic
 
 def clean_arabic_text(text):
     """

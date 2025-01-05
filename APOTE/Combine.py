@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 
-from Display_Arabic_In_Termanal import display_arabic
+from APOTE.Display_Arabic_In_Termanal import display_arabic
 
 def combine_text_files(input_folder, output_folder, output_filename="Combined_text.txt"):
     """
