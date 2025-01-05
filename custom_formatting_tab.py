@@ -1,3 +1,4 @@
+import shutil
 import gradio as gr
 import os
 from tkinter import Tk, filedialog
@@ -15,6 +16,23 @@ def on_browse(data_type):
         root.destroy()
         return filename if filename else "No folder selected"
     return "Invalid selection"
+
+def combine_lines_to_paragraphs(lines):
+    """
+    Combine lines into a single paragraph while maintaining proper spacing and punctuation.
+    """
+    paragraph = ""
+    for line in lines:
+        stripped_line = line.strip()
+        if not stripped_line:  # Skip empty lines
+            continue
+
+        if paragraph:  # Add a space before appending the next line
+            paragraph += " "
+
+        paragraph += stripped_line
+
+    return paragraph
 
 
 def custom_format_folder(folder_path, remove_page_numbers, remove_extra_newlines, watermarks):
@@ -34,7 +52,7 @@ def custom_format_folder(folder_path, remove_page_numbers, remove_extra_newlines
     new_folder_path = os.path.join(parent_dir, new_folder_name)
 
     if os.path.exists(new_folder_path):
-        return f"The folder '{new_folder_name}' already exists."
+        shutil.rmtree(new_folder_path)  # Deletes the existing folder
 
     os.makedirs(new_folder_path, exist_ok=True)
 
@@ -66,14 +84,17 @@ def custom_format_folder(folder_path, remove_page_numbers, remove_extra_newlines
                     if any(watermark in stripped_line.lower() for watermark in watermarks_list):
                         continue
 
-                    # Remove extra newlines
-                    if remove_extra_newlines and not stripped_line:
-                        continue
 
                     formatted_lines.append(line)
 
-                # Save formatted content
-                formatted_content = "\n".join(formatted_lines)
+
+                    # Combine lines into paragraphs if remove_extra_newlines is True
+                    if remove_extra_newlines:
+                        formatted_content = combine_lines_to_paragraphs(formatted_lines)
+                    else:
+                        formatted_content = "\n".join(formatted_lines)
+
+
                 with open(output_file_path, "w", encoding="utf-8") as outfile:
                     outfile.write(formatted_content)
 
@@ -96,7 +117,7 @@ def create_custom_formatting_tab():
         data_type = gr.Textbox(value="Folder", visible=False)
 
         # Folder browsing and selection
-        folder_path = gr.Textbox(label="Selected Folder Path", interactive=False)
+        folder_path = gr.Textbox(label="Selected Folder Path", interactive=True)
         browse_button = gr.Button("Browse Folder")
         browse_button.click(fn=on_browse, inputs=[data_type], outputs=folder_path)
 
@@ -104,7 +125,7 @@ def create_custom_formatting_tab():
         remove_page_numbers = gr.Checkbox(label="Remove Page Numbers", value=True)
         remove_extra_newlines = gr.Checkbox(label="Remove Extra Newlines", value=True)
         watermarks = gr.Textbox(
-            label="Watermarks (Comma-Separated)",
+            label="Watermarks (Comma, Separated)",
             placeholder="Enter watermarks to remove, e.g., watermark1, watermark2"
         )
 
