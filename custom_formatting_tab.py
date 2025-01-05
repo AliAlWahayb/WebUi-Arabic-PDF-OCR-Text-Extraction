@@ -17,6 +17,19 @@ def on_browse(data_type):
         return filename if filename else "No folder selected"
     return "Invalid selection"
 
+
+def remove_n_lines_from_bottom(content, n):
+    """
+    Remove the last `n` lines from the content.
+    """
+    lines = content.splitlines()
+    if n == 0:
+        return content
+    if n <= len(lines):
+        return "\n".join(lines[:-n])
+    return ""  # If `n` is greater than the total lines, return an empty string.
+
+
 def combine_lines_to_paragraphs(lines):
     """
     Combine lines into a single paragraph while maintaining proper spacing and punctuation.
@@ -35,7 +48,7 @@ def combine_lines_to_paragraphs(lines):
     return paragraph
 
 
-def custom_format_folder(folder_path, remove_page_numbers, remove_extra_newlines, watermarks):
+def custom_format_folder(folder_path, remove_page_numbers, remove_extra_newlines, watermarks, remove_lines_count):
     """
     Apply formatting to all `.txt` files in the selected folder.
     Save the formatted files in a new folder inside the parent directory.
@@ -69,7 +82,10 @@ def custom_format_folder(folder_path, remove_page_numbers, remove_extra_newlines
                 with open(input_file_path, "r", encoding="utf-8") as infile:
                     content = infile.read()
 
-                # Apply formatting
+                # Step 1: Remove `n` lines from the bottom
+                content = remove_n_lines_from_bottom(content, remove_lines_count)
+
+                # Step 2: Split into lines for further processing
                 lines = content.splitlines()
                 formatted_lines = []
 
@@ -84,17 +100,15 @@ def custom_format_folder(folder_path, remove_page_numbers, remove_extra_newlines
                     if any(watermark in stripped_line.lower() for watermark in watermarks_list):
                         continue
 
-
                     formatted_lines.append(line)
 
+                # Step 3: Combine lines into paragraphs if remove_extra_newlines is True
+                if remove_extra_newlines:
+                    formatted_content = combine_lines_to_paragraphs(formatted_lines)
+                else:
+                    formatted_content = "\n".join(formatted_lines)
 
-                    # Combine lines into paragraphs if remove_extra_newlines is True
-                    if remove_extra_newlines:
-                        formatted_content = combine_lines_to_paragraphs(formatted_lines)
-                    else:
-                        formatted_content = "\n".join(formatted_lines)
-
-
+                # Save formatted content
                 with open(output_file_path, "w", encoding="utf-8") as outfile:
                     outfile.write(formatted_content)
 
@@ -125,9 +139,10 @@ def create_custom_formatting_tab():
         remove_page_numbers = gr.Checkbox(label="Remove Page Numbers", value=True)
         remove_extra_newlines = gr.Checkbox(label="Remove Extra Newlines", value=True)
         watermarks = gr.Textbox(
-            label="Watermarks (Comma, Separated)",
+            label="Watermarks (Comma-Separated)",
             placeholder="Enter watermarks to remove, e.g., watermark1, watermark2"
         )
+        remove_lines_count = gr.Number(label="Remove N Lines from Bottom", value=0, precision=0)
 
         # Apply formatting
         format_button = gr.Button("Apply Formatting")
@@ -135,6 +150,7 @@ def create_custom_formatting_tab():
 
         format_button.click(
             fn=custom_format_folder,
-            inputs=[folder_path, remove_page_numbers, remove_extra_newlines, watermarks],
+            inputs=[folder_path, remove_page_numbers, remove_extra_newlines, watermarks, remove_lines_count],
             outputs=output_message
         )
+
