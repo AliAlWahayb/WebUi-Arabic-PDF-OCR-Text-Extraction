@@ -1,3 +1,4 @@
+gradio
 google-cloud-documentai
 PyPDF2
 python-dotenv

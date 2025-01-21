@@ -1,78 +1,95 @@
-# Arabic-PDF-OCR-Text-Extraction
 
-This project provides a Python-based solution to extract Arabic text from PDF documents using Google Document AI. It processes PDFs to generate formatted `.txt` files containing the extracted text.
+# WebUi-Arabic-PDF-OCR-Text-Extraction
+
+This project provides an interactive Web User Interface (WebUI) for extracting Arabic text from PDF documents using Google Document AI, with additional features for text processing and formatting.
 
 ## Features
 
-- **High-Accuracy OCR**: Employs Google Cloud Document AI for robust and scalable Optical Character Recognition of Arabic text in PDFs.
-- **Comprehensive Text Processing**: Includes functions for:
-- Normalizing Arabic text (removing tashkeel, etc.).
-- Correcting common spelling errors.
-- Removing unwanted characters and whitespace.
-- Improving overall text readability.
-- **Optional Diacritization**: Integrates Farasa for adding diacritics (tashkeel) to the extracted text, enhancing linguistic accuracy.
-- **Asynchronous Processing**: Utilizes asyncio and concurrent.futures to process multiple files concurrently, significantly improving performance for large datasets.
+### 1. **Web-Based Interface**:
+- Easily upload PDFs and apply OCR processing through a user-friendly Gradio-powered WebUI.
+- Multi-tab interface for streamlined operations:
+  - **Process PDF**: Extract text from PDFs and apply advanced processing options.
+  - **Configuration**: Update project configurations for Google Document AI.
+  - **Custom Formatting**: Apply custom formatting options to text files.
+
+### 2. **High-Accuracy OCR**:
+- Utilizes Google Document AI for robust and scalable Optical Character Recognition (OCR) for Arabic text.
+
+### 3. **Comprehensive Text Processing**:
+- Options for splitting PDFs into pages.
+- Text formatting, including removing unwanted characters and improving readability.
+- Optional diacritization (tashkeel) for linguistic accuracy.
+- Combining processed text files into a single document.
+
+### 4. **Custom Text Formatting**:
+- Remove page numbers, watermarks, or extra lines.
+- Combine lines into paragraphs for enhanced readability.
+
+### 5. **Configuration Management**:
+- Easily configure Project ID, Location, and Processor ID for Google Document AI using the WebUI.
 
 ## Requirements
 
 Ensure the following dependencies are installed:
 
+- `gradio`
 - `google-cloud-documentai`
 - `PyPDF2`
 - `python-dotenv`
 - `arabic_reshaper`
 - `python-bidi`
 - `tqdm`
+- `tkinter`
 
-Install these dependencies using the provided `requirements.txt` file:
+Install these dependencies using the provided `requirements.txt`:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-*Note*: Ensure that you have access to Google Document AI and have set up the necessary authentication credentials.
+**Note**: Ensure access to Google Document AI and the proper setup of authentication credentials.
 
 ## Usage
 
-1. **Set Up Google Document AI Credentials**: Follow the [Google Cloud documentation](https://cloud.google.com/document-ai/docs/setup) to set up authentication and obtain your credentials.
+### 1. **Set Up Google Document AI Credentials**:
+Follow the [Google Cloud documentation](https://cloud.google.com/document-ai/docs/setup) to configure authentication and obtain your credentials.
 
-2. **Create .env File**:
-   - Create .env file and add 
-   - project_id=
-   - location=
-   - processor_id=
+### 2. **Configuration**:
+- Add the following values to the Configuration tab:
+  ```
+  PROJECT_ID=your_project_id
+  LOCATION=your_location
+  PROCESSOR_ID=your_processor_id
+  ```
 
-3. **Configure the Scripts**:
-   - Specify the path to your input PDF file in `main.py`.
+### 3. **Run the WebUI**:
+Launch the Gradio interface with the following command:
 
-4. **Run the Scripts**:
-   - Use `main.py` to extract text from PDF files. The extracted and formatted text will be saved as `.txt` files in the output directory.
+```bash
+python main.py
+```
 
-
+### 4. **Process PDFs**:
+- Navigate to the **Process PDF** tab to upload a file and apply desired operations such as OCR, formatting, and diacritization.
+- Use the **Configuration** tab to update settings for Google Document AI.
+- Use the **Custom Formatting** tab to apply advanced formatting to text files.
 
 ## Output
 
-- **Text Files**: `.txt` files containing the extracted Arabic text, formatted for readability and ease of use.
+- **Formatted Text Files**: Extracted and processed `.txt` files are saved in organized output directories.
+- **Logs**: Detailed processing logs are displayed in the WebUI.
 
 ## Example
 
-Here's how to set the input PDF path in the scripts:
-
-```python
-# Set the path to the input PDF file in main.py
-pdf_file_path = '/path/to/your/input.pdf'
-
-# Run main.py 
-```
-
-After running the scripts, the extracted and processed text files will be saved in the output directory with the same name as the pdf file.
+After uploading a PDF in the **Process PDF** tab and selecting the desired options (e.g., OCR, text formatting, etc.), click "Process PDF." The processed files will be saved in the output directory.
 
 ## License
-- This project is licensed under the MIT License.
+
+This project is licensed under the MIT License.
 
 ## Notes
 
-- Ensure that your Google Cloud credentials are correctly set up and that you have the necessary permissions to use Document AI.
-- The script is designed to handle PDFs containing Arabic text. For other languages, adjust the Document AI settings accordingly.
+- Ensure Google Cloud credentials are correctly set up with sufficient permissions.
+- The tool is designed primarily for Arabic PDFs but can be adapted for other languages with adjustments to Google Document AI settings.
 
 For more details and updates, visit the [GitHub repository](https://github.com/AliAlWahayb/Arabic-PDF-OCR-Text-Extraction).
