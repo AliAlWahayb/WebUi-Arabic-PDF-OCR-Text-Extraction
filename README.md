@@ -28,6 +28,14 @@ This project provides an interactive Web User Interface (WebUI) for extracting A
 ### 5. **Configuration Management**:
 - Easily configure Project ID, Location, and Processor ID for Google Document AI using the WebUI.
 
+## Screenshots
+
+<div style="display: flex; justify-content: space-around;">
+    <img src="https://i.imgur.com/vbG34YW.png"  width="300">
+    <img src="https://i.imgur.com/7htc5Hx.png"  width="300">
+    <img src="https://i.imgur.com/klTVXZB.png"  width="300">
+</div>
+
 ## Requirements
 
 Ensure the following dependencies are installed:
